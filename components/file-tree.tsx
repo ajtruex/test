@@ -11,54 +11,24 @@ import {
   X,
 } from "lucide-react"
 
-type FileType = {
-  name: string
-  dateAdded: string
-  size: string
-  kind: "FOLDER" | "AUDIO" | "VIDEO"
-  children?: FileType[]
-}
+// type FileType = {
+//   name: string
+//   dateAdded: string
+//   size: string
+//   kind: "FOLDER" | "AUDIO" | "VIDEO"
+//   children?: FileType[]
+// }
 
-const files: FileType[] = [
+const files = [
   {
-    name: "1_NEW",
+    name: "VIDEO",
     dateAdded: "08.23.2024 10:35PM",
-    size: "47MB",
+    size: "3GB",
     kind: "FOLDER",
     children: [
       {
-        name: "NO FACE - DRAKE.MP3",
+        name: "KANYE WEST GRAMMYS.MP4",
         dateAdded: "08.23.2024 10:35PM",
-        size: "8MB",
-        kind: "AUDIO",
-      },
-      {
-        name: "SOD - DRAKE.MP3",
-        dateAdded: "08.23.2024 10:35PM",
-        size: "8MB",
-        kind: "AUDIO",
-      },
-      {
-        name: "CIRCADIAN RHYTHM - DRAKE.MP3",
-        dateAdded: "08.23.2024 10:35PM",
-        size: "2MB",
-        kind: "AUDIO",
-      },
-      {
-        name: "IT'S UP - DRAKE.MP3",
-        dateAdded: "08.02.2024 07:04AM",
-        size: "11MB",
-        kind: "AUDIO",
-      },
-      {
-        name: "BLUE GREEN RED - DRAKE.MP3",
-        dateAdded: "08.09.2024 06:42PM",
-        size: "9MB",
-        kind: "AUDIO",
-      },
-      {
-        name: "HOUSEKEEPING KNOWS - DRAKE.MP3",
-        dateAdded: "08.02.2024 07:04AM",
         size: "8MB",
         kind: "AUDIO",
       },
@@ -170,7 +140,7 @@ const files: FileType[] = [
   },
 ]
 
-const FileIcon = ({ kind }: { kind: FileType["kind"] }) => {
+const FileIcon = ({ kind }) => {
   switch (kind) {
     case "FOLDER":
       return <Folder className="w-4 h-4 text-gray-400" />
@@ -183,15 +153,7 @@ const FileIcon = ({ kind }: { kind: FileType["kind"] }) => {
   }
 }
 
-const FileTreeItem = ({
-  file,
-  onSelect,
-  depth = 0,
-}: {
-  file: FileType
-  onSelect: (file: FileType) => void
-  depth?: number
-}) => {
+const FileTreeItem = ({ file, onSelect, depth = 0 }) => {
   const [isOpen, setIsOpen] = useState(true)
 
   const handleClick = () => {
@@ -205,11 +167,11 @@ const FileTreeItem = ({
   return (
     <>
       <div
-        className={`grid grid-cols-6 grid-flow-col auto-cols-auto items-center py-2 px-4 hover:bg-gray-800 cursor-pointer`}
+        className={`grid grid-cols-6 grid-flow-col auto-cols-auto place-items-start justify-items-center py-2 px-4  hover:bg-gray-800 cursor-pointer`}
         style={{ paddingLeft: `${depth * 1.5 + 1}rem` }}
         onClick={handleClick}
       >
-        <div className="flex items-center">
+        <div className="flex items-center max-w-fit">
           {file.children && (
             <ChevronDown
               className={`w-4 h-4 mr-2 transition-transform duration-200 ${
@@ -219,7 +181,9 @@ const FileTreeItem = ({
           )}
           <FileIcon kind={file.kind} />
         </div>
-        <span className="ml-1 truncate col-start-2">{file.name}</span>
+        <span className="ml-1 text-clip  place-self-center text-center w-auto mx-2 col-start-2 text-xs">
+          {file.name}
+        </span>
         <span className="text-gray-500 text-sm mx-auto col-start-3">
           {file.dateAdded}
         </span>
@@ -242,13 +206,14 @@ const FileTreeItem = ({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
+            className="ml-7"
           >
             {file.children.map((child) => (
               <FileTreeItem
                 key={child.name}
                 file={child}
                 onSelect={onSelect}
-                depth={depth + 1}
+                // depth={depth + 1}
               />
             ))}
           </motion.div>
@@ -258,13 +223,7 @@ const FileTreeItem = ({
   )
 }
 
-const MediaWindow = ({
-  file,
-  onClose,
-}: {
-  file: FileType
-  onClose: () => void
-}) => {
+const MediaWindow = ({ file, onClose }) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -303,18 +262,19 @@ const MediaWindow = ({
 }
 
 export default function Component() {
-  const [selectedFile, setSelectedFile] = useState<FileType | null>(null)
+  const [selectedFile, setSelectedFile] = useState(null)
 
   return (
     <div className="bg-gray-900 text-white min-h-screen max-w-screen-xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">100GIGSFORYOURHEADTOP</h1>
       <div className="bg-black rounded-lg overflow-hidden">
-        <div className="grid grid-cols-6 grid-flow-col auto-cols-auto font-semibold text-gray-400 py-2 px-4">
+        <div className="grid grid-cols-6 grid-flow-col auto-cols-auto justify-items-center font-semibold text-gray-400 py-2 px-4">
           {/* <span className="w-8 col-start-1"></span> */}
           <span className="col-start-2">Name</span>
           <span className="min-w-fit mx-auto col-start-3">Date Added</span>
-          <span className="w-1/6 mx-auto col-start-4">Kind</span>
-          <span className="w-1/6 mx-auto col-start-5">Size</span>
+          <span className="w-1/6 mx-auto col-start-4">Size</span>
+          <span className="w-1/6 mx-auto col-start-5">Kind</span>
+
           <span className="w-1/7 mx-auto col-start-6">Action</span>
         </div>
         {files.map((file) => (
