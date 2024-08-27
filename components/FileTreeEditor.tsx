@@ -205,7 +205,7 @@ const FileTreeItem = ({
   return (
     <>
       <div
-        className={`grid grid-cols-6 grid-flow-col auto-cols-auto items-center py-2 px-4 hover:bg-gray-800 cursor-pointer`}
+        className={`grid grid-cols-[auto_1fr_200px_100px_100px_auto] items-center py-2 px-4 hover:bg-gray-800 cursor-pointer`}
         style={{ paddingLeft: `${depth * 1.5 + 1}rem` }}
         onClick={handleClick}
       >
@@ -219,18 +219,12 @@ const FileTreeItem = ({
           )}
           <FileIcon kind={file.kind} />
         </div>
-        <span className="ml-1 truncate col-start-2">{file.name}</span>
-        <span className="text-gray-500 text-sm mx-auto col-start-3">
-          {file.dateAdded}
-        </span>
-        <span className="text-gray-500 text-sm col-start-4 mx-auto">
-          {file.size}
-        </span>
-        <span className="text-gray-500 text-sm col-start-5 mx-auto">
-          {file.kind}
-        </span>
+        <span className="ml-2 truncate">{file.name}</span>
+        <span className="text-gray-500 text-sm">{file.dateAdded}</span>
+        <span className="text-gray-500 text-sm">{file.size}</span>
+        <span className="text-gray-500 text-sm">{file.kind}</span>
         {file.kind !== "FOLDER" && (
-          <button className="text-blue-500 hover:text-blue-400 justify-self-center col-start-6">
+          <button className="text-blue-500 hover:text-blue-400 justify-self-end">
             <Download className="w-4 h-4" />
           </button>
         )}
@@ -302,20 +296,20 @@ const MediaWindow = ({
   )
 }
 
-export default function Component() {
+export default function FileTreeEditor() {
   const [selectedFile, setSelectedFile] = useState<FileType | null>(null)
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen max-w-screen-xl mx-auto p-4">
+    <div className="bg-gray-900 text-white min-h-screen p-4">
       <h1 className="text-2xl font-bold mb-4">100GIGSFORYOURHEADTOP</h1>
       <div className="bg-black rounded-lg overflow-hidden">
-        <div className="grid grid-cols-6 grid-flow-col auto-cols-auto font-semibold text-gray-400 py-2 px-4">
-          {/* <span className="w-8 col-start-1"></span> */}
-          <span className="col-start-2">Name</span>
-          <span className="min-w-fit mx-auto col-start-3">Date Added</span>
-          <span className="w-1/6 mx-auto col-start-4">Kind</span>
-          <span className="w-1/6 mx-auto col-start-5">Size</span>
-          <span className="w-1/7 mx-auto col-start-6">Action</span>
+        <div className="grid grid-cols-[auto_1fr_200px_100px_100px_auto] font-semibold text-gray-400 py-2 px-4">
+          <span className="w-8"></span>
+          <span>Name</span>
+          <span>Date Added</span>
+          <span>Size</span>
+          <span>Kind</span>
+          <span>Action</span>
         </div>
         {files.map((file) => (
           <FileTreeItem
