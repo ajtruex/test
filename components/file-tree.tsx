@@ -23,120 +23,24 @@ const files = [
   {
     name: "VIDEO",
     dateAdded: "08.23.2024 10:35PM",
-    size: "3GB",
+    size: "1GB",
     kind: "FOLDER",
     children: [
       {
-        name: "KANYE WEST GRAMMYS.MP4",
+        name: "KANYE WEST - GRAMMYS Hey mama.MP4",
         dateAdded: "08.23.2024 10:35PM",
-        size: "8MB",
-        kind: "AUDIO",
+        size: "1GB",
+        kind: "VIDEO",
+        url: "https://d34073qwlt06j3.cloudfront.net/KanyeWestPerformsStrongerAndHeyMama.mp4",
+      },
+      {
+        name: "DAFT PUNK - ALIVE 2007 WIRELESS 02.MP4",
+        dateAdded: "08.23.2024 10:35PM",
+        size: "1GB",
+        kind: "VIDEO",
+        url: "https://d34073qwlt06j3.cloudfront.net/Daft_Punk-Alive_2007_Wireless_O2.mp4",
       },
     ],
-  },
-  {
-    name: "2.0 6_RELOADED",
-    dateAdded: "08.22.2024 01:22AM",
-    size: "3GB",
-    kind: "FOLDER",
-  },
-  {
-    name: "2.0 ATL_TORONTO",
-    dateAdded: "08.22.2024 01:22AM",
-    size: "567MB",
-    kind: "FOLDER",
-    children: [
-      {
-        name: "P6160003 3.MP4",
-        dateAdded: "08.22.2024 01:22AM",
-        size: "41MB",
-        kind: "VIDEO",
-      },
-      {
-        name: "P6160010 4.MP4",
-        dateAdded: "08.22.2024 01:22AM",
-        size: "48MB",
-        kind: "VIDEO",
-      },
-      {
-        name: "P6160028 5.MP4",
-        dateAdded: "08.22.2024 01:22AM",
-        size: "13MB",
-        kind: "VIDEO",
-      },
-      {
-        name: "P6160033 7.MP4",
-        dateAdded: "08.22.2024 01:22AM",
-        size: "19MB",
-        kind: "VIDEO",
-      },
-      {
-        name: "P6160070 8.MP4",
-        dateAdded: "08.22.2024 01:22AM",
-        size: "72MB",
-        kind: "VIDEO",
-      },
-      {
-        name: "P6160076 9.MP4",
-        dateAdded: "08.22.2024 01:22AM",
-        size: "75MB",
-        kind: "VIDEO",
-      },
-      {
-        name: "P6160091 BOOTH 1 12.MP4",
-        dateAdded: "08.22.2024 01:22AM",
-        size: "43MB",
-        kind: "VIDEO",
-      },
-      {
-        name: "P6160092 BOOTH 2 13.MP4",
-        dateAdded: "08.22.2024 01:22AM",
-        size: "115MB",
-        kind: "VIDEO",
-      },
-      {
-        name: "P6160093 14.MP4",
-        dateAdded: "08.22.2024 01:22AM",
-        size: "43MB",
-        kind: "VIDEO",
-      },
-      {
-        name: "P6160094 15.MP4",
-        dateAdded: "08.22.2024 01:22AM",
-        size: "20MB",
-        kind: "VIDEO",
-      },
-      {
-        name: "P6160099 16.MP4",
-        dateAdded: "08.22.2024 01:22AM",
-        size: "28MB",
-        kind: "VIDEO",
-      },
-      {
-        name: "P6160102 17.MP4",
-        dateAdded: "08.22.2024 01:22AM",
-        size: "50MB",
-        kind: "VIDEO",
-      },
-    ],
-  },
-  {
-    name: "2.0 I_FORGET",
-    dateAdded: "08.22.2024 01:22AM",
-    size: "137MB",
-    kind: "FOLDER",
-  },
-  {
-    name: "2.0 LISTENING_PARTY",
-    dateAdded: "08.22.2024 01:22AM",
-    size: "749MB",
-    kind: "FOLDER",
-  },
-  {
-    name: "2.0 LONG_TALK",
-    dateAdded: "08.22.2024 01:22AM",
-    size: "667MB",
-    kind: "FOLDER",
   },
 ]
 
@@ -154,7 +58,7 @@ const FileIcon = ({ kind }) => {
 }
 
 const FileTreeItem = ({ file, onSelect, depth = 0 }) => {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleClick = () => {
     if (file.kind === "FOLDER") {
@@ -167,11 +71,11 @@ const FileTreeItem = ({ file, onSelect, depth = 0 }) => {
   return (
     <>
       <div
-        className={`grid grid-cols-6 grid-flow-col auto-cols-auto place-items-start justify-items-center py-2 px-4  hover:bg-gray-800 cursor-pointer`}
+        className={`grid grid-cols-6 grid-flow-col auto-cols-auto place-items-start justify-items-center  py-2 px-4 hover:bg-gray-800 cursor-pointer`}
         style={{ paddingLeft: `${depth * 1.5 + 1}rem` }}
         onClick={handleClick}
       >
-        <div className="flex items-center max-w-fit">
+        <div className="flex items-center w-1/2 col-start-1">
           {file.children && (
             <ChevronDown
               className={`w-4 h-4 mr-2 transition-transform duration-200 ${
@@ -181,7 +85,7 @@ const FileTreeItem = ({ file, onSelect, depth = 0 }) => {
           )}
           <FileIcon kind={file.kind} />
         </div>
-        <span className="ml-1 text-clip  place-self-center text-center w-auto mx-2 col-start-2 text-xs">
+        <span className="ml-1 text-ellipsis truncate place-self-center justify-center text-center items-center w-[225px] mx-2 text-xs col-start-2 ">
           {file.name}
         </span>
         <span className="text-gray-500 text-sm mx-auto col-start-3">
@@ -245,9 +149,13 @@ const MediaWindow = ({ file, onClose }) => {
               Your browser does not support the audio element.
             </audio>
           ) : (
-            <video controls className="w-full h-full">
-              <source src={`/placeholder.mp4`} type="video/mp4" />
-              Your browser does not support the video tag.
+            <video
+              controls
+              poster="https://d34073qwlt06j3.cloudfront.net/kanye-poster.webp"
+              className="rounded-xl my-12 mb-20 sm:mb-0"
+              autoPlay
+            >
+              <source src={file.url} type="video/mp4" />
             </video>
           )}
         </div>
@@ -266,15 +174,14 @@ export default function Component() {
 
   return (
     <div className="bg-gray-900 text-white min-h-screen max-w-screen-xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">100GIGSFORYOURHEADTOP</h1>
+      <h1 className="text-2xl font-extrabold mb-4">INSPO</h1>
       <div className="bg-black rounded-lg overflow-hidden">
         <div className="grid grid-cols-6 grid-flow-col auto-cols-auto justify-items-center font-semibold text-gray-400 py-2 px-4">
           {/* <span className="w-8 col-start-1"></span> */}
           <span className="col-start-2">Name</span>
           <span className="min-w-fit mx-auto col-start-3">Date Added</span>
-          <span className="w-1/6 mx-auto col-start-4">Size</span>
-          <span className="w-1/6 mx-auto col-start-5">Kind</span>
-
+          <span className="w-1/6 mx-auto col-start-4">Kind</span>
+          <span className="w-1/6 mx-auto col-start-5">Size</span>
           <span className="w-1/7 mx-auto col-start-6">Action</span>
         </div>
         {files.map((file) => (
